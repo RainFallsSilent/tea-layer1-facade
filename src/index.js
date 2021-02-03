@@ -293,14 +293,16 @@ async function main () {
         const newRequestBuf = new proto.DelegateProtobuf('UpdateKeyGenerationResult')
         const updateKeyGenerationResultRequest = newRequestBuf.decode(Buffer.from(msg, 'base64'))
 
-        const taskId = toHex(updateKeyGenerationResultRequest.taskId, { addPrefix: true })
+        console.log("update_generate_key_result msg:", updateKeyGenerationResultRequest)
+
+        const taskId = '0x' + updateKeyGenerationResultRequest.taskId
         const delegatorNonce = toHex(updateKeyGenerationResultRequest.delegatorNonce, { addPrefix: true })
         const multiSigAccount = toHex(updateKeyGenerationResultRequest.multiSigAccount, { addPrefix: true })
         const p2PublicKey = toHex(updateKeyGenerationResultRequest.publicKey, { addPrefix: true })
         const deploymentIds = []
         if (updateKeyGenerationResultRequest.deploymentIds) {
           updateKeyGenerationResultRequest.deploymentIds.forEach((id, i) => {
-            deploymentIds.push(Buffer.from(id, 'hex'))
+            deploymentIds.push('0x' + id)
           })
         }
 
